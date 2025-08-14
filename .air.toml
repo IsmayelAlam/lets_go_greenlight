@@ -3,7 +3,7 @@ testdata_dir = "testdata"
 tmp_dir = "tmp"
 
 [build]
-  args_bin = ['-port=4000','-env=development']
+  args_bin = ['-port=4000','-env=development','-db-dsn=postgres://postgres:postgres@localhost/postgres?sslmode=disable']
   bin = "./bin/main"
   cmd = 'go build -o ./bin/main ./cmd/api/.'
   delay = 1000
