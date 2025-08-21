@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"flag"
 	"log/slog"
+	"net/http"
 	"os"
 	"sync"
 	"time"
@@ -117,4 +118,9 @@ func openDB(cfg config) (*sql.DB, error) {
 	}
 
 	return db, nil
+}
+
+func (app *application) invalidCredentialsResponse(w http.ResponseWriter, r *http.Request) {
+	message := "invalid authentication credentials"
+	app.errorResponse(w, r, http.StatusUnauthorized, message)
 }
