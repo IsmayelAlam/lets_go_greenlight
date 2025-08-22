@@ -25,7 +25,6 @@ func (app *application) errorResponse(w http.ResponseWriter, r *http.Request, st
 
 func (app *application) serverErrorResponse(w http.ResponseWriter, r *http.Request, err error) {
 	app.logError(r, err)
-
 	message := "the server encountered a problem and could not process your request"
 	app.errorResponse(w, r, http.StatusInternalServerError, message)
 }
@@ -54,8 +53,7 @@ func (app *application) editConflictResponse(w http.ResponseWriter, r *http.Requ
 }
 
 func (app *application) rateLimitExceededResponse(w http.ResponseWriter, r *http.Request) {
-	message :=
-		"rate limit exceeded"
+	message := "rate limit exceeded"
 	app.errorResponse(w, r, http.StatusTooManyRequests, message)
 }
 
@@ -72,5 +70,10 @@ func (app *application) authenticationRequiredResponse(w http.ResponseWriter, r 
 
 func (app *application) inactiveAccountResponse(w http.ResponseWriter, r *http.Request) {
 	message := "your user account must be activated to access this resource"
+	app.errorResponse(w, r, http.StatusForbidden, message)
+}
+
+func (app *application) notPermittedResponse(w http.ResponseWriter, r *http.Request) {
+	message := "your user account doesn't have the necessary permissions to access this resource"
 	app.errorResponse(w, r, http.StatusForbidden, message)
 }
