@@ -1,3 +1,6 @@
+# Include variables from the .envrc file
+include .envrc
+
 ## help: print this help message
 .PHONY: help
 help:
@@ -11,7 +14,7 @@ confirm:
 ## run/api: run the cmd/api application
 .PHONY: run/api
 run/api:
-go run ./cmd/api
+	go run ./cmd/api
 
 ## db/psql: connect to the database using psql
 .PHONY: db/psql
@@ -28,4 +31,4 @@ db/migrations/new:
 .PHONY: db/migrations/up
 db/migrations/up: confirm
 	@echo 'Running up migrations...'
-	migrate -path ./migrations -database ${GREENLIGHT_DB_DSN} up
+	@migrate -path ./migrations -database ${GREENLIGHT_DB_DSN} up
