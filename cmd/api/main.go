@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"expvar"
 	"flag"
+	"fmt"
 	"log/slog"
 	"net/http"
 	"os"
@@ -16,9 +17,10 @@ import (
 	_ "github.com/lib/pq"
 	"lets_go.greenlight/internal/data"
 	"lets_go.greenlight/internal/mailer"
+	"lets_go.greenlight/internal/vcs"
 )
 
-const version = "1.0.0"
+var version = vcs.Version()
 
 type config struct {
 	port int
@@ -80,7 +82,14 @@ func main() {
 		return nil
 	})
 
+	displayVersion := flag.Bool("version", false, "Display version and exit")
+
 	flag.Parse()
+
+	if *displayVersion {
+		fmt.Printf("Version:\t%s\n", version)
+		os.Exit(0)
+	}
 
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
 
